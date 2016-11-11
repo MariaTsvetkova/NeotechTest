@@ -25,6 +25,7 @@ var obstacles = [];
 var score;
 var food;
 var currentDir;
+var gameInterval;
 
 var DIRECTION = {
   RIGHT : {x: 1, y: 0}, 
@@ -48,6 +49,7 @@ function init() {
 	snakeColor="green";
 	currentDir=DIRECTION.RIGHT;
 	score=0;
+	gameInterval=240;
 	
 }
 
@@ -70,7 +72,7 @@ var gameArea = {
         this.canvas.height = gameAreaHeight;
         this.context = this.canvas.getContext("2d");
         this.scoreNo = 0;
-        this.interval = setInterval(updateGameArea, 240);
+        this.interval = setInterval(updateGameArea, gameInterval);
 
     },
     clear : function(){
@@ -119,6 +121,8 @@ function updateGameArea() {
 		if(headXnew == food.x && headYnew == food.y){
 			var tail=new component(snakeSize, snakeSize, snakeColor, headXnew, headYnew);
 			score++;
+			gameInterval-=30;  //increase speed of the snake
+			console.log("time :"+gameInterval);
 			newFood();
 		}else{
 			var tail = obstacles.pop(); 
